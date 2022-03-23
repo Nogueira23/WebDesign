@@ -1,0 +1,66 @@
+    body {
+        background-color: #f7f7ff;
+        max-width: 900px; /* largura máxima para a tela*/
+        margin: auto; /* espaçamento automático de acordo com a tela acessada*/
+    }
+    
+    #title,
+    .subtitle,
+    .post_title {
+        color: #505050;
+    }
+
+    .photo{
+        border: 1px solid #505050;
+        border-radius: 50%;
+    }
+    
+    .post_title {
+        font-size: 30px;
+        text-transform: capitalize;
+        font-style: italic;
+        margin: 0;
+        margin-bottom: 15px;
+    }
+    
+    .post {
+        color: #505050;
+        /* adicionar um espaçamento entre o conteúdo e a borda*/
+        /* pode ser feita no "padding" normal tbm, basta colocar na sequência como uma classe é declarada*/
+        padding: 15px;
+        border: 3px solid #000;
+        margin-bottom: 15px;
+        border-radius: 5px;
+
+    }
+    .post_content{
+        margin: 0;
+        margin-bottom: 15px;
+    }
+
+    .post_imagem{
+        margin-bottom: 15px;
+
+    }
+    
+    .link{
+        color: #353131;
+        font-style: italic;
+        text-decoration: none;
+    }
+    /* alterações em como link vai ficar quando o cursor for passado por ele*/
+    .link:hover{
+        color: rgb(69, 69, 187);
+    }
+
+    .link_contacts{
+        color: #353131;
+        font-style: italic;
+        text-decoration: none;
+        text-align: center;
+    }
+    
+    .text
+    {
+        text-align: center;
+    }
