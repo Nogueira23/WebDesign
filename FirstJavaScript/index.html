@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <title>Trivia!</title>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+        
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <h3>What is approximate ratio of people to sheep in New Zealand? </h3>
+                <div id="result_correct1">Correct!</div>
+                <div id="result_incorrect1">Incorrect!</div>
+                <button id="target">6 people per 1 sheep</button>
+
+                <button id="b">3 people per 1 sheep</button>
+
+                <button id="c">1 person per 1 sheep</button>
+                
+                <button id="d">1 person per 3 sheep</button>
+                <!-- TODO: Add multiple choice question here -->
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- TODO: Add free response question here -->
+                <h3>In which country is it ilegal to own only one guinea pig, as a lone guinea pig might
+                    get lonely?
+                </h3>
+                    <div id="result_correct2">Correct!</div>
+                    <div id="result_incorrect2">Incorrect!</div>
+                    <input id="result" type="text">
+                    <input type="submit" id="result2" value="Check Answer">
+            </div>
+        <script src="jquery-3.6.0.min.js" type="application/javascript"></script>
+        <script src="app.js" type="application/javascript"></script>
+    </body>
+</html>
