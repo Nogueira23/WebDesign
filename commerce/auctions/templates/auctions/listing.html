@@ -1,0 +1,150 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container main">
+    <!--Produto ativo ou não-->
+    {% if product.open == True %}
+    <div class="row pb-3 pl-3">
+        <strong>Listing: {{product.name}}</strong>
+    </div>
+    <!--Condição de autenficação para que o usuário assista o produto-->
+    {% if user.is_authenticated %}
+    <div class="row pb-3 pl-3">
+        <form action="{% url 'watchlist_add' product.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="userid" hidden value="{{user.id}}">
+            <input type="submit" value="Watchlist">
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="row pb-3 pl-3" style="align-items: center; align-content:center;">
+        {% if product.image != None %}
+        <div class="col">
+            <img src="{{ product.image }}" alt="ImageProduct" style="height: 200px;">
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row pb-3 pl-3">
+        {{ product.describe }}
+    </div>
+
+    <div class="row pb-3 pl-3">
+        <strong>R$: {{product.price}}</strong>
+    </div>
+
+    <div class="row pb-1 pl-3">
+        {{product.number_bids}}(s) so far. Your bid is the current bid.
+    </div>
+    <!--Condição para autorização do usuário para dar lance-->
+    {% if user.is_authenticated %}
+    <div class="row pb-1 pl-3">
+        <form action="{% url 'listing' product.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Bid" name="valueBid">
+            <input type="text" name="userid" value="{{user.id}}" hidden>
+            {% for bid in bids %}
+                {% if product.name == bid.product.name %}
+                    <input type="text" name="bidid" value="{{bid.id}}" hidden>
+                {% endif %}
+            {% endfor %}
+            <input type="submit" value="Place Bid">
+        </form>
+    </div>
+    {% else %}
+    <div class="row pb-1 pl-3">
+        <strong>To Bid Please Login</strong>
+    </div>
+    {% endif %}
+
+
+    <div class="row pb-3 pt-3 pl-3">
+        <strong>Details</strong>
+    </div>
+    <div class="row">
+        <ul>    
+            <li>Listed by: {{product.user.username}}</li>
+            <li>Category: {{product.category}}</li>
+        </ul>
+    </div>
+    <!--Produto Vendido-->
+    {% else %}
+    <div class="row pb-3 pl-3">
+        <strong>{{product.name}}</strong>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="row pb-3 pl-3">
+        <form action="{% url 'watchlist_add' user.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="id_product" hidden value="{{product.id}}">
+            <input type="submit" value="Watchlist">
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="row pb-3 pl-3" style="align-items: center; align-content:center;">
+        {% if product.image != None %}
+        <div class="col">
+            <img src="{{ product.image }}" alt="ImageProduct" style="height: 200px;">
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row pb-3 pl-3">
+        {{ product.describe }}
+    </div>
+
+    <div class="row pb-1 pl-3">
+        <strong>Product Unavailable</strong>
+    </div>
+    {% for bid in bids %}
+        {% if product.name == bid.product.name %}
+            {% if user.id == bid.buyer.id %}
+                <div class="row pb-1 pl-3">
+                    <strong>Congratulations {{user.username}}, you won the auction and adquired {{product.name}}</strong> 
+                </div>
+
+                <div class="row pb-3 pl-3">
+                    The final bid was de R$:{{bid.valueBid}}
+                </div>
+            {% else %}
+                <div class="row pb-1 pl-3">
+                    <strong>Buyer:</strong> {{bid.buyer.username}}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {% if user.is_authenticated and user.username == product.user.username and product.open == True %}
+    <div class="row pt-3 pl-3">
+        <a href="{% url 'close' product.id %}">Close Auction</a>
+    </div>
+    {% endif %}
+
+</div>
+<div class="container main">
+    <div class="row pl-3 pb-3 pt-3">
+        <h2>Comments</h2>
+    </div>
+    {% if user.is_authenticated %}
+        <form action="{% url 'comment' product.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="comment" placeholder="Comment" style="width: 90%;">
+            <input type="text" name="userid" hidden value="{{user.id}}" style="width: 10%;">
+            <input type="submit" value="Comment" >
+        </form>
+    {% endif %}
+    
+    {% for comment in comments %}
+        <div class="row pl-3 pt-2">
+            {% if comment.product.id == product.id %}
+                <strong>{{comment.user.username}}</strong>: {{comment.comment}}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

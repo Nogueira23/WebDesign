@@ -1,0 +1,9 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+    {% for fav in watchlist %}
+        <div class="row pl-3 pt-3">
+            <a href="{% url 'listing' fav.product.id %}">{{ fav.product.name}}</a>
+        </div>
+    {% endfor %}
+{% endblock %}

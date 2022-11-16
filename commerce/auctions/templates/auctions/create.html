@@ -1,0 +1,28 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'create' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Product Name">
+            <input type="text" name="price" placeholder="Price">
+            <input type="text" name="describe" placeholder="Product Describe">
+            <input type="text" name="img" placeholder="URL Image">
+            <input type="date" name="data">
+            <input type="text" name="userid" hidden value="{{user.id}}">
+            <select name="category">
+                {% for category in categories %}
+                <option value="{{ category }}" name="category">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+    {% else %}
+        <strong>Log in to create an auction</strong>
+        <br>
+        <a href="{% url 'login' %}">Log In</a> 
+    {% endif %}
+
+
+{% endblock %}

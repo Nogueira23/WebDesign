@@ -1,0 +1,41 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+
+<h2>Active Listings</h2>
+{% for action in actions %}
+    <div class="container main">
+        <a href="{% url 'listing' action.id %}">
+            <div class="row p-3">
+                {% if action.image != None %}
+                <div class="col">
+                    <img src="{{ action.image }}" alt="ImageProduct" style="height: 200px;
+                    
+                    ">
+                </div>
+                {% endif %}
+                <div class="col">
+                    <div class="row p-1">
+                        <strong>{{ action.name }}</strong>
+                    </div>
+
+                    <div class="row p-1">
+                        <strong>Price:</strong> R$: {{action.price}}
+                    </div>
+                    
+                    <div class="row p-1">
+                        <strong>Describe:</strong> {{action.describe}}
+                    </div>
+                    
+                    <div class="row p-1">
+                        Created {{action.data}}
+                    </div>
+
+                </div>
+
+            </div>
+        </a>
+    </div>
+{% endfor %}
+
+{% endblock %}
