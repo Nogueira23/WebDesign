@@ -6,6 +6,7 @@
         <title>{% block title %}Auctions{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <script src="{% static 'auctions/main.js' %}"></script>
     </head>
     <body>
         <h1>Auctions</h1>
@@ -23,9 +24,15 @@
             <li class="nav-item">
                 <a href="{% url 'categories' %}" class="nav-link">Categories</a>
             </li>
-            <li class="nav-item">
-                <a href="{% url 'watchlist' user.id %}" class="nav-link">Watchlist</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'watchlist' user.id %}" class="nav-link">Watchlist</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'login' %}" class="nav-link" id="UserNotAuthenticated">Watchlist</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a href="{% url 'create' %}" class="nav-link">Create Listing</a>
             </li>

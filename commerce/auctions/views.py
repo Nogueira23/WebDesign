@@ -130,6 +130,8 @@ def comment(request, id_product):
     return HttpResponseRedirect(reverse('listing', args=(id_product)))
 
 def watchlist(request, user_id):
+    if user_id == None:
+        return HttpResponse('Log in to access the Watchlist!', status=401)
     watchlist_user = Watchlist.objects.filter(user=user_id)
     return render(request, 'auctions/watchlist.html', {
         'watchlist': watchlist_user,
